@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./main.css";
 import { assets } from "../../assets/assets";
 import Card from "./Card";
+import { Context } from "../../context/Context";
 
 const dummyPrompts = [
   {
@@ -23,6 +24,16 @@ const dummyPrompts = [
 ];
 
 const Main = () => {
+  const {
+    onSent,
+    input,
+    setInput,
+    recentPrompt,
+    showResult,
+    loading,
+    resultData,
+  } = useContext(Context);
+
   return (
     <div className="main">
       <div className="nav">
@@ -30,25 +41,53 @@ const Main = () => {
         <img src={assets.user_icon} alt="" />
       </div>
       <div className="main-container">
-        <div className="greet">
-          <p>
-            <span>Hello, Dev.</span>
-          </p>
-          <p>How can I help you today?</p>
-        </div>
-        <div className="cards">
-          {dummyPrompts.map((el) => (
-            <Card text={el.prompt} imgIcon={el.icon} />
-          ))}
-        </div>
+        {!showResult ? (
+          <>
+            <div className="greet">
+              <p>
+                <span>Hello, Dev.</span>
+              </p>
+              <p>How can I help you today?</p>
+            </div>
+            <div className="cards">
+              {dummyPrompts.map((el, index) => (
+                <Card text={el.prompt} imgIcon={el.icon} key={index} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="result">
+            <div className="result-title">
+              <img src={assets.user_icon} alt="user icon" />
+              <p>{recentPrompt}</p>
+            </div>
+            <div className="result-data">
+              <img src={assets.gemini_icon} alt="gemini icon" />
+              {loading ? (
+                <div className="loader">
+                  <hr />
+                  <hr />
+                  <hr />
+                </div>
+              ) : (
+                <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <div className="main-bottom">
         <div className="search-box">
-          <input type="text" placeholder="Enter a prompt here" />
+          <input
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+            type="text"
+            placeholder="Enter a prompt here"
+          />
           <div>
             <img src={assets.gallery_icon} alt="gallery" />
             <img src={assets.mic_icon} alt="record" />
-            <img src={assets.send_icon} alt="send" />
+            <img onClick={() => onSent()} src={assets.send_icon} alt="send" />
           </div>
         </div>
         <p className="bottom-info">

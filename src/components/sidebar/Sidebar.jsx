@@ -44,11 +44,12 @@ const Sidebar = () => {
         ) : null}
       </div>
       <div className="bottom">
-        {bottomIcons.map((el) => (
+        {bottomIcons.map((el, index) => (
           <BottomItem
             imgSrc={assets[el.icon]}
             text={el.text}
             withText={extended}
+            key={index}
           />
         ))}
       </div>
