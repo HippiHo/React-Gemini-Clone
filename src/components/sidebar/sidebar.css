@@ -3,7 +3,7 @@
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #c6e2eb;
+  background-color: #c7ddff;
   padding: 10px;
 }
 
@@ -23,11 +23,12 @@
   align-items: center;
   gap: 10px;
   padding: 10px 15px;
-  background-color: #f6c1c9;
   border-radius: 50px;
   font-size: 14px;
   color: grey;
   cursor: pointer;
+  border: solid 2px #ff6f62;
+  background: radial-gradient(#ffffff, #ff6f62);
 }
 
 .sidebar .recent {
